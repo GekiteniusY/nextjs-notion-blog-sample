@@ -1,6 +1,4 @@
-# Sample workflow for building and deploying a Next.js site to GitHub Pages
-#
-# To get started with Next.js see: https://nextjs.org/docs/getting-started
+# workflow for building and deploying a Next.js site to GitHub Pages
 #
 name: Deploy Next.js site to Pages
 
@@ -29,7 +27,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages # ここで指定するEnvironment名を設定
+      name: github-pages # Environment名を設定
     steps:
       - name: Checkout
         uses: actions/checkout@v4
