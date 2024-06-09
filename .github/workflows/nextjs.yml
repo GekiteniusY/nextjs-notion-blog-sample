@@ -61,6 +61,8 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
+
+      # ビルドのキャッシュを復元
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -71,16 +73,21 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+
+      # 依存関係をインストール
       - name: Install dependencies
         run: |
           echo "NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}"
           echo "NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}"
           ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      # 環境変数を設定してNext.jsをビルド
       - name: Build with Next.js
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+
+      # ビルドした生成物をアップロード
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
