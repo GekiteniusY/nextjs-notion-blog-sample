@@ -38,11 +38,17 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-        run: npm run build && npm run export && touch ./out
+        run: npm run build
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.0 # 最新バージョンに更新
+      # ビルドした生成物をアップロード
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" # Use secrets for the token
-          BRANCH: gh-pages
-          FOLDER: out
+          path: ./out
+
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@4.1.0 # 最新バージョンに更新
+      #   with:
+      #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" # Use secrets for the token
+      #     BRANCH: gh-pages
+      #     FOLDER: out
