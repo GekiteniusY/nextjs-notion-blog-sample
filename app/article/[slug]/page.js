@@ -9,6 +9,9 @@ import Text from '../../../components/text';
 import { renderBlock } from '../../../components/notion/renderer';
 import styles from '../../../styles/post.module.css';
 
+export const dynamic = 'error';
+// export const dynamicParams = true;
+
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const database = await getDatabase();
@@ -21,6 +24,7 @@ export async function generateStaticParams() {
   //   }),
   //   fallback: false,
   // };
+  console.log(database);
   return database?.map((page) => {
     const slug = page.properties.Slug?.formula?.string;
     return ({ id: page.id, slug });

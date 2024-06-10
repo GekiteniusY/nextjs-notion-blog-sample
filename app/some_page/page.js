@@ -5,6 +5,8 @@ import styles from '../index.module.css';
 
 export const databaseId = process.env?.NOTION_DATABASE_ID ?? 'NOTION_DATABASE_ID';
 
+export const dynamic = 'error';
+
 async function getPosts() {
   const database = await getDatabase();
 
