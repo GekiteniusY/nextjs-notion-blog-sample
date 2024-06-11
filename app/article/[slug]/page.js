@@ -9,12 +9,13 @@ import Text from '../../../components/text';
 import { renderBlock } from '../../../components/notion/renderer';
 import styles from '../../../styles/post.module.css';
 
-export const dynamic = 'error';
+// export const dynamic = 'error';
 // export const dynamicParams = true;
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const database = await getDatabase();
+  // const posts = await getPosts();
   // return {
   //   paths: database?.map((page) => {
   //     const slug = page.properties.Slug?.formula?.string;
@@ -24,9 +25,11 @@ export async function generateStaticParams() {
   //   }),
   //   fallback: false,
   // };
-  console.log(database);
+  // console.log(database);
   return database?.map((page) => {
-    const slug = page.properties.Slug?.formula?.string;
+    console.log(page);
+    const slug = page.properties?.Slug?.rich_text[0].text.content;
+    console.log(slug);
     return ({ id: page.id, slug });
   });
 }
