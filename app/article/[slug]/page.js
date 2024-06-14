@@ -15,17 +15,6 @@ import styles from '../../../styles/post.module.css';
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const database = await getDatabase();
-  // const posts = await getPosts();
-  // return {
-  //   paths: database?.map((page) => {
-  //     const slug = page.properties.Slug?.formula?.string;
-  //     return ({
-  //       params: { id: page.id, slug },
-  //     });
-  //   }),
-  //   fallback: false,
-  // };
-  // console.log(database);
   return database?.map((page) => {
     console.log(page);
     const slug = page.properties?.Slug?.rich_text[0].text.content;
@@ -33,6 +22,8 @@ export async function generateStaticParams() {
     return ({ id: page.id, slug });
   });
 }
+
+// TODO: ビルド時のエラーをわかりやすくするためにプロップスの読み込み処理を切り出す
 
 export default async function Page({ params }) {
   const page = await getPageFromSlug(params?.slug);
@@ -45,13 +36,14 @@ export default async function Page({ params }) {
   return (
     <div>
       <Head>
-        <title>{page.properties.Title?.title[0].plain_text}</title>
+        <title>{page.properties.Title?.rich_text[0].plain_text}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <article className={styles.container}>
         <h1 className={styles.name}>
-          <Text title={page.properties.Title?.title} />
+          {/*  */}
+          <Text title={page.properties.Title?.rich_text} />
         </h1>
         <section>
           {blocks.map((block) => (
