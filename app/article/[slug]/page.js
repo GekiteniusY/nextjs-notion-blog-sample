@@ -17,11 +17,43 @@ export async function generateStaticParams() {
   const database = await getDatabase();
   return database?.map((page) => {
     console.log(page);
+    // const slug = page.properties.Slug?.formula?.string;
     const slug = page.properties?.Slug?.rich_text[0].text.content;
     console.log(slug);
     return ({ id: page.id, slug });
   });
 }
+
+// getDatabase()で取得したあとの個別の要素(page)の構造
+// {
+//   object: 'page',
+//   id: '12345678901234567890',
+//   created_time: '2024-06-13T10:02:00.000Z',
+//   last_edited_time: '2024-06-13T11:38:00.000Z',
+//   created_by: { object: 'user', id: 'YYYYYYYYYYYYYYY' },
+//   last_edited_by: { object: 'user', id: 'YYYYYYYYYYYYYYY' },
+//   cover: null,
+//   icon: null,
+//   parent: {
+//     type: 'database_id',
+//     database_id: 'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+//   },
+//   archived: false,
+//   in_trash: false,
+//   properties: {
+//     CreatedDate: {
+//       id: '%3AXM%40',
+//       type: 'created_time',
+//       created_time: '2024-06-13T10:02:00.000Z'
+//     },
+//     'タグ': { id: 'Ex%3BH', type: 'multi_select', multi_select: [] },
+//     Slug: { id: 'a%3COL', type: 'rich_text', rich_text: [Array] },
+//     Title: { id: 'dR%3BD', type: 'rich_text', rich_text: [Array] },
+//     AutoCreatedTitle: { id: 'title', type: 'title', title: [Array] }
+//   },
+//   url: 'https://www.notion.so/2024-6-13-ZZZZZZZZZZZZZZZZZZ',
+//   public_url: null
+// }
 
 // TODO: ビルド時のエラーをわかりやすくするためにプロップスの読み込み処理を切り出す
 
