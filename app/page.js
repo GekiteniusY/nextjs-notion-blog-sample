@@ -13,6 +13,8 @@ async function getPosts() {
 
 export default async function Page() {
   const posts = await getPosts();
+  console.log('called Page()');
+  console.log('posts object: ', posts);
   return (
     <div>
       <main className={styles.container}>
@@ -74,20 +76,26 @@ export default async function Page() {
         <h2 className={styles.heading}>All Posts</h2>
         <ol className={styles.posts}>
           {posts.map((post) => {
-            const date = new Date(post.last_edited_time).toLocaleString(
-              'en-US',
-              {
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric',
-              },
-            );
+            console.log('post: ', post);
+            const date = post.properties.AutoCreatedTitle.title[0].text.content;
+            console.log('date: ', date);
+            // const date = new Date(post.last_edited_time).toLocaleString(
+            //   'en-US',
+            //   {
+            //     month: 'short',
+            //     day: '2-digit',
+            //     year: 'numeric',
+            //   },
+            // );
             const slug = post.properties?.Slug?.rich_text[0].text.content;
+            const title = post.properties?.Title?.rich_text;
+            console.log('title: ', title);
             return (
               <li key={post.id} className={styles.post}>
                 <h3 className={styles.postTitle}>
                   <Link href={`/article/${slug}`}>
-                    <Text title={post.properties?.Title?.title} />
+                    {/* <Text title={post.properties?.Title?.title} /> */}
+                    <Text title={title} />
                   </Link>
                 </h3>
 

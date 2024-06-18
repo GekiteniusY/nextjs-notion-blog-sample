@@ -16,10 +16,10 @@ import styles from '../../../styles/post.module.css';
 export async function generateStaticParams() {
   const database = await getDatabase();
   return database?.map((page) => {
-    console.log(page);
+    // console.log('Page object: ', page);
     // const slug = page.properties.Slug?.formula?.string;
     const slug = page.properties?.Slug?.rich_text[0].text.content;
-    console.log(slug);
+    // console.log('Slug object: ', slug);
     return ({ id: page.id, slug });
   });
 }
@@ -59,7 +59,9 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   const page = await getPageFromSlug(params?.slug);
+  // console.log('Page() page object: ', page);
   const blocks = await getBlocks(page?.id);
+  // console.log('Page() blocks object: ', blocks);
 
   if (!page || !blocks) {
     return <div />;
@@ -68,7 +70,13 @@ export default async function Page({ params }) {
   return (
     <div>
       <Head>
-        <title>{page.properties.Title?.rich_text[0].plain_text}</title>
+        <title>
+          {() => {
+            const title = page.properties.Title?.rich_text[0].plain_text;
+            console.log('title is created: ', title);
+            return title;
+          }}
+        </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
