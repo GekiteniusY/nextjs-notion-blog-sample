@@ -13,7 +13,7 @@ async function getPosts() {
 
 export default async function Page() {
   const posts = await getPosts();
-  console.log('called Page()');
+  // console.log('called Page()');
   console.log('posts object: ', posts);
   return (
     <div>
